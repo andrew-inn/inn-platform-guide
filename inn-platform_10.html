@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>INN Platform — How to Use</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#23211c;--muted:#8d8a7c;--bg:#efeee7;--border:#e4e1d8;--red:#dc2626;--green:#3c7a30;--blue:#2f6db0;--amber:#a8701b;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:#fff;font-size:14.5px;line-height:1.65;}
+  a{color:var(--blue);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh;}
+
+  /* Sticky sidebar TOC */
+  .toc{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg);border-right:1px solid var(--border);padding:36px 20px 40px;}
+  .toc-brand{font-family:'Inter Tight',sans-serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;}
+  .toc-section{margin-bottom:4px;}
+  .toc a{display:block;font-size:12.5px;font-weight:500;color:#6f6c60;padding:4px 8px;border-radius:5px;line-height:1.4;}
+  .toc a:hover{background:#e6e3d9;color:var(--ink);text-decoration:none;}
+  .toc a.active{background:#1f1d18;color:#fff;}
+  .toc-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:#b6b3a5;margin:16px 8px 5px;}
+
+  /* Main content */
+  .main{padding:60px 72px 100px;max-width:860px;}
+  .cover{padding-bottom:48px;border-bottom:2px solid var(--ink);margin-bottom:52px;}
+  .cover-eye{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:14px;}
+  .cover-title{font-family:'Inter Tight',sans-serif;font-size:40px;font-weight:800;line-height:1.08;margin-bottom:12px;}
+  .cover-sub{font-size:15.5px;color:#46443c;max-width:540px;margin-bottom:28px;line-height:1.6;}
+  .cover-note{font-size:13px;color:var(--muted);border-top:1px solid var(--border);padding-top:14px;}
+  .cover-note code{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px;color:var(--ink);}
+
+  /* Who box */
+  .who{background:var(--bg);border-radius:12px;padding:26px 28px;margin-bottom:52px;}
+  .who-title{font-family:'Inter Tight',sans-serif;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+  .who-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;}
+  .who-item .label{font-weight:700;font-size:13.5px;margin-bottom:5px;}
+  .who-item .desc{font-size:12.5px;color:#46443c;line-height:1.55;}
+  .who-item .where{font-size:11.5px;color:var(--blue);font-weight:600;margin-top:6px;}
+
+  /* Sections */
+  .section{margin-bottom:64px;scroll-margin-top:32px;}
+  .section-eye{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:7px;}
+  h2{font-family:'Inter Tight',sans-serif;font-size:26px;font-weight:800;margin-bottom:14px;line-height:1.2;}
+  h3{font-family:'Inter Tight',sans-serif;font-size:16px;font-weight:700;margin:26px 0 8px;}
+  p{color:#46443c;margin-bottom:13px;max-width:620px;}
+  p:last-child{margin-bottom:0;}
+
+  /* Steps */
+  .steps{counter-reset:step;margin:18px 0 24px;}
+  .step{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+  .step:last-child{border-bottom:none;}
+  .step-num{font-family:'Inter Tight',sans-serif;font-size:20px;font-weight:800;color:var(--red);width:26px;flex-shrink:0;line-height:1;}
+  .step-body{font-size:14px;color:#46443c;line-height:1.6;}
+  .step-body b{color:var(--ink);}
+
+  /* Callouts */
+  .note{background:#fdf8f0;border:1px solid #f0deb8;border-radius:9px;padding:14px 18px;font-size:13px;color:#6b5020;margin:18px 0;line-height:1.6;}
+  .note b{color:#8a6520;}
+
+  /* Cols */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:16px 0 24px;}
+  .col-card{background:var(--bg);border-radius:10px;padding:16px 18px;}
+  .col-card .col-label{font-weight:700;font-size:12.5px;margin-bottom:5px;}
+  .col-card .col-desc{font-size:12.5px;color:#46443c;line-height:1.55;}
+
+  /* Channel table */
+  .ch-table{width:100%;border-collapse:collapse;margin:16px 0 24px;font-size:13px;}
+  .ch-table th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:7px 12px;background:var(--bg);border-bottom:2px solid var(--border);}
+  .ch-table td{padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:#46443c;line-height:1.5;}
+  .ch-table td:first-child{font-weight:600;color:var(--ink);white-space:nowrap;}
+  .ch-table tr:last-child td{border-bottom:none;}
+
+  /* Flow */
+  .flow{background:var(--bg);border-radius:12px;padding:26px 30px;margin:24px 0;}
+  .flow-title{font-family:'Inter Tight',sans-serif;font-size:15px;font-weight:800;margin-bottom:18px;}
+
+  /* First-time box */
+  .firsttime{border:2px solid #1f1d18;border-radius:12px;padding:26px 28px;margin-top:52px;}
+  .firsttime-title{font-family:'Inter Tight',sans-serif;font-size:17px;font-weight:800;margin-bottom:18px;}
+
+  /* External link pill */
+  .ext-link{display:inline-flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:5px 13px;font-size:12.5px;font-weight:600;color:var(--blue);margin:4px 0;}
+  .ext-link svg{width:12px;height:12px;flex-shrink:0;}
+
+  @media print{
+    .toc{display:none;}
+    .layout{display:block;}
+    .main{padding:36px 48px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ── Sticky TOC ── -->
+  <nav class="toc">
+    <div class="toc-brand">INN Platform</div>
+    <div class="toc-label">Getting started</div>
+    <div class="toc-section"><a href="#overview">What it does</a></div>
+    <div class="toc-section"><a href="#three-things">Three things to know</a></div>
+    <div class="toc-section"><a href="#how-a-story-moves">How a story moves</a></div>
+    <div class="toc-label">Sections</div>
+    <div class="toc-section"><a href="#dashboard">Dashboard</a></div>
+    <div class="toc-section"><a href="#inbox">Inbox</a></div>
+    <div class="toc-section"><a href="#content-hub">Content Hub</a></div>
+    <div class="toc-section"><a href="#broadcast">Broadcast</a></div>
+    <div class="toc-section"><a href="#my-network">My Network</a></div>
+    <div class="toc-section"><a href="#settings">Settings</a></div>
+    <div class="toc-section"><a href="#pulse">Pulse</a></div>
+  </nav>
+
+  <!-- ── Main content ── -->
+  <div class="main">
+
+    <div class="cover">
+      <div class="cover-eye">Institute for Nonprofit News</div>
+      <div class="cover-title">INN Platform<br>How to Use</div>
+      <div class="cover-sub">A guide to managing where your journalism goes, who it reaches, and how it performs — all in one place.</div>
+      <div class="cover-note">Open <code>inn-platform.html</code> in Chrome or Safari to follow along. Use the dark sidebar to move between sections. Use the menu on the left to jump to any part of this guide.</div>
+    </div>
+
+    <!-- ── Overview ── -->
+    <div class="section" id="overview">
+      <div class="section-eye">What it does</div>
+      <h2>One screen for every story's journey</h2>
+      <p>Once you publish a story, it can reach many different audiences through many different channels — text subscribers, editors you trust, syndication partners — but most newsrooms manage each of these in a separate tool, or not at all. The INN Platform brings them together.</p>
+      <p>Every story you publish appears in Content Hub. From there, with a toggle or a quick approval step, it can route to any combination of channels. Performance from every channel comes back to the same row — no switching between dashboards.</p>
+    </div>
+
+    <!-- ── Three things ── -->
+    <div class="section" id="three-things">
+      <div class="section-eye">Before you start</div>
+      <h2>Three things to know</h2>
+
+      <h3>1. There are three kinds of people your stories can reach</h3>
+      <div class="who" style="margin-bottom:20px;">
+        <div class="who-grid">
+          <div class="who-item">
+            <div class="label">Text subscribers</div>
+            <div class="desc">Readers who've signed up to receive your journalism by text message. They opted in on their own — you didn't recruit them individually.</div>
+            <div class="where">→ Dashboard · Inbox · Broadcast · Settings</div>
+          </div>
+          <div class="who-item">
+            <div class="label">Network contacts</div>
+            <div class="desc">Editors and outlets you've personally invited to receive your approved stories by email. These are professional relationships you build and manage yourself.</div>
+            <div class="where">→ My Network</div>
+          </div>
+          <div class="who-item">
+            <div class="label">Syndication partners</div>
+            <div class="desc">Platforms and networks — like Apple News, Plucky, or Ekkow — that have agreements with INN to distribute member content. You opt in once; approved stories route automatically.</div>
+            <div class="where">→ Content Hub → Partner Settings</div>
+          </div>
+        </div>
+      </div>
+
+      <h3>2. Not every story needs to go everywhere</h3>
+      <p>You choose, for each story, which channels it goes to. Some take one click. Others need a short approval step first. Nothing routes automatically without your say-so.</p>
+
+      <h3>3. Content Hub is the center of everything</h3>
+      <p>Every distribution decision lives there. The other sections — Dashboard, Inbox, Broadcast, My Network, Settings, Pulse — either feed into Content Hub or show you results from it.</p>
+    </div>
+
+    <!-- ── How a story moves ── -->
+    <div class="section" id="how-a-story-moves">
+      <div class="section-eye">The core workflow</div>
+      <h2>How a story moves through the platform</h2>
+
+      <div class="flow">
+        <div class="flow-title">Five steps, all from one screen</div>
+        <div class="steps">
+          <div class="step"><div class="step-num">1</div><div class="step-body"><b>Story is published</b> by your newsroom and appears automatically in Content Hub.</div></div>
+          <div class="step"><div class="step-num">2</div><div class="step-body"><b>Choose your channels</b> — every distribution option is available from the story's row. Toggle to queue it for your text subscriber digest. Toggle again to include it in your next scheduled email to editors. Both take one click and don't require anything else.</div></div>
+          <div class="step"><div class="step-num">3</div><div class="step-body"><b>Approve for syndication partners</b> — if you want the story to route to INN-managed platforms, click Approve. You'll add an image, a caption, and a photo credit. The Approve button activates once all three are complete.</div></div>
+          <div class="step"><div class="step-num">4</div><div class="step-body"><b>Stories route automatically</b> from that point forward — to the digest, to your editor contacts on their schedule, to syndication partners for pickup.</div></div>
+          <div class="step"><div class="step-num">5</div><div class="step-body"><b>Performance comes back to the same row</b> — click counts from your text subscribers, open rates from your editor network, and pickup status from each syndication partner all appear in the story's row without switching tools.</div></div>
+        </div>
+      </div>
+
+      <div class="note">
+        <b>On the approval step:</b> Partners have display standards. An image with a caption and credit is required because stories without them are often rejected or displayed incorrectly on partner platforms. Queuing a story for your text digest or your editor network does not require this step — those channels are independent.
+      </div>
+    </div>
+
+    <!-- ── DASHBOARD ── -->
+    <div class="section" id="dashboard">
+      <div class="section-eye">Section 1</div>
+      <h2>Dashboard</h2>
+      <p>Your text subscriber program at a glance. Everything here reflects readers who receive your news by text — how many have subscribed this month, how many clicks links in your texts have gotten, how many messages have gone out, and which stories are driving the most engagement.</p>
+      <p>The chart below the stat tiles shows six months of subscriber growth. The ranked list at the bottom shows your top-performing stories by click count from text subscribers. These links will eventually connect directly to each story in Content Hub.</p>
+    </div>
+
+    <!-- ── INBOX ── -->
+    <div class="section" id="inbox">
+      <div class="section-eye">Section 2</div>
+      <h2>Inbox</h2>
+      <p>Where text conversations live. When someone texts in to subscribe — or texts back with a question, a response, or their profile information — it shows up here.</p>
+      <p>The Inbox has three columns:</p>
+      <div class="cols">
+        <div class="col-card">
+          <div class="col-label">Messages</div>
+          <div class="col-desc">A list of all conversations, sorted by most recent. Shows each person's name (if they've provided it) or their phone number, a preview of the last message, and an unread indicator. Use the search field to find a specific subscriber by name, number, or zip code.</div>
+        </div>
+        <div class="col-card">
+          <div class="col-label">Conversation</div>
+          <div class="col-desc">The full message thread with the selected subscriber. Incoming messages appear on the left; your replies appear on the right. Type a reply in the field at the bottom and click Send. Your reply goes directly to their phone.</div>
+        </div>
+      </div>
+      <div class="col-card" style="margin-bottom:22px;">
+        <div class="col-label">Subscriber profile</div>
+        <div class="col-desc">Name, email, zip code, and stated interests — filled in when a subscriber responds to the sign-up questions. You can edit any field and save. The panel also shows subscription status, join date, and how many digests they've received. You can unsubscribe someone from here if needed.</div>
+      </div>
+
+      <h3>Where profile information comes from</h3>
+      <p>When someone texts in to subscribe, they receive a welcome message asking for their first name, zip code, and topics they're interested in. If they reply, that information is automatically parsed into their profile fields. Not everyone responds — so some profiles will only have a phone number.</p>
+
+      <div class="note">
+        <b>Setting up INN Texting for your newsroom:</b> The Inbox only works if your newsroom has an active INN Texting line. If you haven't set one up yet, the full setup guide covers everything from creating a landing page to growing your subscriber list to managing your weekly digest.
+        <br><br>
+        <a class="ext-link" href="https://inn.org/texting-guide" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          INN Texting setup guide
+        </a>
+      </div>
+    </div>
+
+    <!-- ── CONTENT HUB ── -->
+    <div class="section" id="content-hub">
+      <div class="section-eye">Section 3</div>
+      <h2>Content Hub</h2>
+      <p>The main working screen. Every story, every distribution channel, in one view. This is where you'll spend most of your time.</p>
+      <p>Content Hub has two tabs at the top: <b>Articles &amp; Distribution</b> (your daily workflow) and <b>Partner Settings</b> (one-time setup for syndication partners).</p>
+
+      <h3>Articles &amp; Distribution</h3>
+      <p>A list of all your published stories. Six summary numbers run across the top — stories published, live syndication placements, total tracked reads from partners, clicks from your text digest, republications, and stories waiting for your action (in amber).</p>
+      <p>Use the filter chips to see only what needs attention. Search by headline. Every channel for a story is in its row:</p>
+
+      <table class="ch-table">
+        <tr><th>Column</th><th>What it shows</th><th>What you do</th></tr>
+        <tr><td>INN Texting</td><td>Whether the story is queued for your next text digest, and how many clicks it got once sent</td><td>Toggle to queue — one click, no approval needed</td></tr>
+        <tr><td>My Network</td><td>Whether the story is queued for your next editor email, and open count once sent</td><td>Toggle to queue — one click, no approval needed</td></tr>
+        <tr><td>Syndication &amp; Partners</td><td>Status with each INN-managed partner: sent / in review / live with click count / killed</td><td>Approve the story first, then partners become eligible</td></tr>
+        <tr><td>Pickups</td><td>Total tracked reads across all syndication partners</td><td>Read-only</td></tr>
+      </table>
+
+      <p>Stories needing approval have an amber border. Approved stories show a green badge. Killed stories are faded with no action buttons.</p>
+
+      <h3>The approval step</h3>
+      <p>Click any story headline or the Approve button. A panel opens where you upload at least one image, add a caption, and add a photo credit. A checklist tracks what's still needed — the Approve button stays grayed out until all three are complete. Once you approve, the story routes to every syndication partner you've opted into.</p>
+
+      <h3>Partner Settings</h3>
+      <p>The second tab inside Content Hub. This is where you opt your newsroom into INN-managed syndication partners. Each partner has its own content-sharing agreement — read it before accepting. You'll receive an emailed copy of every agreement you sign. You can opt out at any time, and opting into one partner doesn't affect any other.</p>
+    </div>
+
+    <!-- ── BROADCAST ── -->
+    <div class="section" id="broadcast">
+      <div class="section-eye">Section 4</div>
+      <h2>Broadcast</h2>
+      <p>Send a one-time text message to all of your text subscribers. Use this for breaking news, severe weather, or anything that can't wait for the next weekly digest.</p>
+      <p>A Broadcast is different from the INN Texting queue in Content Hub. The queue assembles your weekly digest automatically from stories you've toggled in. A Broadcast is a manual message you write and send yourself, and it goes out immediately.</p>
+      <p>Type your message, check the character counter (160 characters = one text message), and click Send Broadcast. The Recent Broadcasts list below shows what you've sent, when, and to how many text subscribers.</p>
+    </div>
+
+    <!-- ── MY NETWORK ── -->
+    <div class="section" id="my-network">
+      <div class="section-eye">Section 5</div>
+      <h2>My Network</h2>
+      <p>Your personal list of editors and outlets who receive your approved stories by email. These are professional relationships you've built yourself — not text subscribers, and not INN's managed syndication partners. You build this list, you set the schedule, and you own these relationships entirely.</p>
+
+      <h3>Adding contacts</h3>
+      <p>Enter a name, organization, and email at the bottom of the contact list. They receive an invitation and begin getting your story emails once they confirm. Each contact shows their open rate and how many stories they've received.</p>
+
+      <h3>Setting schedules</h3>
+      <p>Every contact has their own send schedule — which days of the week and what time they receive your stories. Click the schedule pill in any contact's row to edit it. Toggle individual days on or off; weekends are off by default but can be added. The "Weekdays" button resets to Monday–Friday. The Default Schedule card at the top applies to new contacts automatically — override per person from there.</p>
+
+      <h3>Recent sends</h3>
+      <p>A history of story emails sent to your network, with open rates and click counts per send.</p>
+    </div>
+
+    <!-- ── SETTINGS ── -->
+    <div class="section" id="settings">
+      <div class="section-eye">Section 6</div>
+      <h2>Settings</h2>
+      <p>Two things: invite team members to the platform, and configure the automated messages your text subscribers receive.</p>
+      <p><b>Invite a team member</b> — enter their name and email and they'll receive access. You can have multiple editors managing the platform.</p>
+      <p><b>Newsroom messages</b> — three templates that go to text subscribers automatically:</p>
+      <div class="cols" style="margin-top:12px;">
+        <div class="col-card"><div class="col-label">Weekly intro</div><div class="col-desc">Sent at the top of each Friday digest. Update it each week if you want to personalize it.</div></div>
+        <div class="col-card"><div class="col-label">Welcome message</div><div class="col-desc">Sent automatically when someone new texts in to subscribe. This is the first thing they see — make it welcoming and clear.</div></div>
+        <div class="col-card"><div class="col-label">Thank you message</div><div class="col-desc">Sent after a new subscriber provides their name, zip, and interests. Confirms you've received their info.</div></div>
+      </div>
+      <p style="margin-top:12px;">These are different from Broadcasts — they run automatically without you doing anything once they're configured.</p>
+      <div class="note"><b>Full setup guidance:</b> The INN Texting setup guide has exact template language and recommendations for each of these messages. <a href="https://inn.org/texting-guide" target="_blank">Read the guide →</a></div>
+    </div>
+
+    <!-- ── PULSE ── -->
+    <div class="section" id="pulse">
+      <div class="section-eye">Section 7</div>
+      <h2>Pulse</h2>
+      <p>Your publishing health at a glance. Pulse answers one question: are you publishing at your normal pace, or has something shifted?</p>
+      <p>Four numbers at the top show your story count for the last 30 days, how many days you published, your deviation from your 26-week rolling average (in red if you're behind), and your six-month total with a note on how many stories have been syndicated.</p>
+      <p>A signal label below — <b>on track</b>, <b>surging</b>, or <b>contracting</b> — gives you a quick read on your momentum. A 28-day bar chart shows publishing day by day. Blue bars are days you published; gray bars are days you didn't. A dotted line shows your baseline pace.</p>
+      <p>Recent stories appear to the right of the chart with topic labels, dates, and a "syndicated" marker for any story a partner has picked up. Pulse is read-only — it updates automatically based on your publishing and distribution activity.</p>
+    </div>
+
+    <!-- ── WHERE TO START ── -->
+    <div class="firsttime" id="first-time">
+      <div class="firsttime-title">If you're setting up for the first time</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-body"><b>Set up INN Texting</b> if you haven't already. The full setup guide covers onboarding, creating a landing page, building your subscriber list, and managing your weekly digest. <a href="https://inn.org/texting-guide">Read the INN Texting setup guide →</a></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-body"><b>Go to Content Hub → Partner Settings</b> and review the available syndication partners. Read each agreement before accepting. Opt into the ones that fit your newsroom.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-body"><b>Go to My Network</b> and add the editors and outlets you have existing relationships with. Set each person's send schedule.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-body"><b>Go to Settings</b> and update the three automated messages your text subscribers receive — especially the welcome message, since that's the first thing new subscribers see.</div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><b>Go to Content Hub</b> and work through any stories flagged as needing approval. Add images, captions, and credits and approve them. After that, your daily workflow is checking Content Hub — approving stories, toggling channels, and watching clicks and pickups come in.</div></div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+// Highlight active TOC link on scroll
+const sections = document.querySelectorAll('.section,[id="first-time"]');
+const tocLinks = document.querySelectorAll('.toc a');
+const observer = new IntersectionObserver(entries=>{{
+  entries.forEach(e=>{{
+    if(e.isIntersecting){{
+      tocLinks.forEach(l=>l.classList.remove('active'));
+      const link = document.querySelector(`.toc a[href="#${e.target.id}"]`);
+      if(link) link.classList.add('active');
+    }}
+  }});
+}},{threshold:0.3});
+sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>
